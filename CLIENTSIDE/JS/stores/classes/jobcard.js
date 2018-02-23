@@ -6,12 +6,12 @@ export default class JobCard {
 
   @observable cardId = null;
   @observable startDate = null;
-  @observable endDate = null;
+  @observable endDate = "end/date";
   @observable jobName = "DEL-3269";
   @observable jobFunction = "Programming";
-  @observable asignee = null;
-  @observable notes = null;
-  @observable projectManager = null;
+  @observable asignee = "asignee";
+  @observable notes = "notes";
+  @observable projectManager = "PM";
   
   //@action async getName() {
     // const response = await fetch('https://randomuser.me/api/');

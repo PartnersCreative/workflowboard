@@ -32,38 +32,36 @@ const Dragger = ({getItemStyle, ...props}) =>
 @inject('store') @observer
 export default class Jobcard extends Component {
 
-	componentDidMount() {
-    const { cardStore } = this.props;
-  }
-
 	constructor(props) {
 	  super(props);
 	};
   
 
   updateField(field, e) {
-    const { store } = this.props;
-    store[field] = e.target.value;
-    this.setState({ field: field });
-    //this.props.card.jobName = e.target.value;
-    // console.log(this.props.card.jobName, "JobName")
+    const { store, card } = this.props;
+    card[field] = e.target.value;
   }
 
 
 	render() {
-  	const { store } = this.props;
+    const { store, card } = this.props;
+    // const { jobCard } = store;
 		// const name = this.props.card.jobName;
 		// const func = this.props.card.jobFunction;
 
-    // console.log(this.props.card.cardId, "cardId")
+    console.log(store, "jobCard")
 
 	    return (
-					<Dragger draggableId={this.props.card.cardId} index={this.props.index} getItemStyle={this.props.getItemStyle}>
-
-          	<h4>Job Name</h4>
-          	<input type='text' className='jobName' name='jobName' value={this.props.card.jobName} onChange={e => this.updateField('jobName', e)} />
-          	<input type='text' className='jobFunction' name='jobFunction' value={this.props.card.jobFunction} onChange={e => this.updateField('jobFunction', e)} />
-            <button className='remove' onClick={() => store.removeJobCard(this.props.card.cardId)}>X</button>
+					<Dragger draggableId={card.cardId} index={this.props.index} getItemStyle={this.props.getItemStyle}>
+          	
+          	<input type='text' className='jobName' name='jobName' value={card.jobName} onChange={e => this.updateField('jobName', e)} />
+          	<input type='text' className='jobFunction' name='jobFunction' value={card.jobFunction} onChange={e => this.updateField('jobFunction', e)} />
+          	<input type='text' className='endDate' name='endDate' value={card.endDate} onChange={e => this.updateField('endDate', e)} />
+          	<input type='text' className='asignee' name='asignee' value={card.asignee} onChange={e => this.updateField('asignee', e)} />
+          	<input type='text' className='projectManager' name='projectManager' value={card.projectManager} onChange={e => this.updateField('projectManager', e)} />
+          	<input type='text' className='notes' name='notes' value={card.notes} onChange={e => this.updateField('notes', e)} />
+            
+            <button className='remove' onClick={() => store.removeJobCard(card.cardId)}>X</button>
 			          
 			    </Dragger>
 
