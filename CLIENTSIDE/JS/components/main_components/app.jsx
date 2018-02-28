@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-
+import $ from 'jquery';
 import Card from './cards';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import DayCell from './daycell';
@@ -37,15 +37,26 @@ export default class App extends Component {
       return;
     }
 
-    // const currentDate = 
-
     const jobCards = store.jobCards;
-    const startIndex = result.source.index;
-    const endIndex = result.destination.index;
+
+    //moving cards from one daycell to another
+    const sourceDay = result.source.droppableId.toLowerCase();
+    const destinationDay = result.destination.droppableId.toLowerCase();
+    const sourceCard = jobCards.find( card => card.cardId === result.draggableId )
+
 
     //moving of the dragged card to new index 
-    const [removed] = jobCards.splice(startIndex, 1);
-    jobCards.splice(endIndex, 0, removed);
+    if( sourceDay === destinationDay ) {
+      const dayStore = store[`${sourceDay}Cards`];
+      const startIndex = result.source.index;
+      const endIndex = result.destination.index;
+
+    } else {
+      
+        
+      sourceCard.startDate = destinationDay;
+      
+    }
   }
 
   // Normally you would want to split things out into separate components.
@@ -53,7 +64,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-      <DragDropContext onDragEnd={this.onDragEnd}>
+      <DragDropContext onDragEnd={this.onDragEnd} >
         <DayCell getItemStyle={getItemStyle} getListStyle={getListStyle} />
       </DragDropContext>
       </div>

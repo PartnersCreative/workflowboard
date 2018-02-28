@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import JobCard from './jobcard';
 import { observer, inject } from 'mobx-react';
 import moment from 'moment';
+import $ from 'jquery';
 
 @inject('store') @observer
 export default class DayCell extends Component {
 
 	constructor(props) {
 	  super(props);
-		console.log(props);
+		//console.log(props);
 	};
 
 	render() {
@@ -35,77 +36,20 @@ export default class DayCell extends Component {
     	<JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
     ));
 
-
-
-
-
-
-		const time = moment().format();
-		console.log(time);
-
-    //const weekArray = moment.weekdays();
-
-    const now = moment().toString()
-
-
-		var dow = moment().isoWeekday();
-		console.log(dow);
-
-		const weekArray = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ];
-
-
-
-
-
-
-
-
-		// const days = [].map((day, index) => (
-  //   	<Droppable droppableId={`day_${Math.random()}`} >
-	 //    	{(provided, snapshot) => (
-
-		// 		    <div
-		// 		      ref={provided.innerRef}
-		// 		      style={this.props.getListStyle(snapshot.isDraggingOver)}
-		// 		    >
-
-		// 		    <p>{day}</p>
-
-		// 		      {provided.placeholder}
-		// 		    </div>
-		// 		  )}
-		// 		</Droppable>
-  //   ));
-
-
 	  return (
-	  	<div>
-			<Droppable droppableId={`day_${Math.random()}`} className="DayCell">
-
-			  {(provided, snapshot) => (
-
-			    <div
-			      ref={provided.innerRef}
-			      style={this.props.getListStyle(snapshot.isDraggingOver)}
-			    >
-
-					<button className='ghostBtn' onClick={() => store.addJobCard()}>Add Card</button>
-					<h1>AllCards</h1>
-					{time}
-					{cards}
-			    
-			      {provided.placeholder}
-			    </div>
-			  )}
-			</Droppable>
-
-			<Droppable droppableId={`day_${Math.random()}`} className="DayCell">
-	     	{(provided, snapshot) => (
+	  	<div id="flexer">
+		
+				<button className='ghostBtn' onClick={() => store.addJobCard()}>Add Card</button>
+		
+				<Droppable droppableId="Monday">
+		     	{(provided, snapshot) => (
 
 		 		    <div
 		 		      ref={provided.innerRef}
 		 		      style={this.props.getListStyle(snapshot.isDraggingOver)}
+		 		      id="dayCell"
 		 		    >
+		 		    	<div id="dow1"></div>
 		 		    	<h1>Monday</h1>
 
 		 		    	{mondayCards}
@@ -114,12 +58,13 @@ export default class DayCell extends Component {
 		 		  )}
 		 		</Droppable>
 
-		 		<Droppable droppableId={`day_${Math.random()}`} className="DayCell">
+		 		<Droppable droppableId="Tuesday" id="dow2">
 	     	{(provided, snapshot) => (
 
 		 		    <div
 		 		      ref={provided.innerRef}
 		 		      style={this.props.getListStyle(snapshot.isDraggingOver)}
+		 		      id="dayCell"
 		 		    >
 		 		    	<h1>Tuesday</h1>
 		 		    	{tuesdayCards}
@@ -128,13 +73,15 @@ export default class DayCell extends Component {
 		 		  )}
 		 		</Droppable>
 
-		 		<Droppable droppableId={`day_${Math.random()}`} className="DayCell">
+		 		<Droppable droppableId="Wednesday" id="dow3">
 	     	{(provided, snapshot) => (
 
 		 		    <div
 		 		      ref={provided.innerRef}
 		 		      style={this.props.getListStyle(snapshot.isDraggingOver)}
+		 		      id="dayCell"
 		 		    >
+		 		    <div id="dow3"></div>
 		 		    	<h1>Wednesday</h1>
 		 		    	{wednesdayCards}
 		 		      {provided.placeholder}
@@ -142,12 +89,13 @@ export default class DayCell extends Component {
 		 		  )}
 		 		</Droppable>
 
-		 		<Droppable droppableId={`day_${Math.random()}`} className="DayCell">
+		 		<Droppable droppableId="Thursday" id="dow4">
 	     	{(provided, snapshot) => (
 
 		 		    <div
 		 		      ref={provided.innerRef}
 		 		      style={this.props.getListStyle(snapshot.isDraggingOver)}
+		 		      id="dayCell"
 		 		    >
 		 		    	<h1>Thursday</h1>
 		 		    	{thursdayCards}
@@ -156,12 +104,13 @@ export default class DayCell extends Component {
 		 		  )}
 		 		</Droppable>
 
-		 		<Droppable droppableId={`day_${Math.random()}`} className="DayCell">
+		 		<Droppable droppableId="Friday" id="dow5">
 	     	{(provided, snapshot) => (
 
 		 		    <div
 		 		      ref={provided.innerRef}
 		 		      style={this.props.getListStyle(snapshot.isDraggingOver)}
+		 		      id="dayCell"
 		 		    >
 		 		    	<h1>Friday</h1>
 		 		    	{fridayCards}

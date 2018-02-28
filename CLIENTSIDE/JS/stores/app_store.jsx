@@ -18,6 +18,7 @@ export default class APP_STORE {
   // *******************
   @observable jobCards = [];
 
+
   @computed get mondayCards(){
     const mondayCards = [];
     this.jobCards.map((jobCard) => {
@@ -65,17 +66,6 @@ export default class APP_STORE {
   }
 
 
-
-
-  @computed get totalSharks() {
-    let totalSharks = 0;
-    this.user.sharkicorns.map((sharkicorn) => {
-      if (sharkicorn.showing) {
-        totalSharks++;
-      }
-    });
-    return totalSharks;
-  }
 
 
 

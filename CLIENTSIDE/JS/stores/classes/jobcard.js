@@ -5,7 +5,7 @@ import request from 'axios';
 export default class JobCard {
 
   @observable cardId = null;
-  @observable startDate = "";
+  @observable startDate = "monday";
   @observable endDate = "end/date";
   @observable jobName = "DEL-3269";
   @observable jobFunction = "Programming";
@@ -13,7 +13,6 @@ export default class JobCard {
   @observable notes = "notes";
   @observable projectManager = "PM";
   @observable associatedRow = null;
-
   
   //@action async getName() {
     // const response = await fetch('https://randomuser.me/api/');

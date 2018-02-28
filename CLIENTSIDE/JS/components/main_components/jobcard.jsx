@@ -41,7 +41,7 @@ export default class Jobcard extends Component {
 	render() {
     const { store, card } = this.props;
     const cardId = card.cardId
-    console.log(card.cardId)
+    //console.log(card.cardId)
 
     // console.log(store, "jobCard")
 
