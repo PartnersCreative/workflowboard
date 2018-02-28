@@ -16,65 +16,71 @@ export default class APP_STORE {
   // *******************
   // *** OBSERVABLES ***
   // *******************
-
   @observable jobCards = [];
 
+  @computed get mondayCards(){
+    const mondayCards = [];
+    this.jobCards.map((jobCard) => {
+      if (jobCard.startDate === "monday") {
+        mondayCards.push(jobCard);
+      }
+    });
+    return mondayCards;
+  }
+  @computed get tuesdayCards(){
+    const tuesdayCards = [];
+    this.jobCards.map((jobCard) => {
+      if (jobCard.startDate === "tuesday") {
+        tuesdayCards.push(jobCard);
+      }
+    });
+    return tuesdayCards;
+  }
+  @computed get wednesdayCards(){
+    const wednesdayCards = [];
+    this.jobCards.map((jobCard) => {
+      if (jobCard.startDate === "wednesday") {
+        wednesdayCards.push(jobCard);
+      }
+    });
+    return wednesdayCards;
+  }
+  @computed get thursdayCards(){
+    const thursdayCards = [];
+    this.jobCards.map((jobCard) => {
+      if (jobCard.startDate === "thursday") {
+        thursdayCards.push(jobCard);
+      }
+    });
+    return thursdayCards;
+  }
+  @computed get fridayCards(){
+    const fridayCards = [];
+    this.jobCards.map((jobCard) => {
+      if (jobCard.startDate === "friday") {
+        fridayCards.push(jobCard);
+      }
+    });
+    return fridayCards;
+  }
 
-  @observable editing = false;
-  //@observable devMode = false;
 
 
-  // *********************
-  // *** COMPUTED VALS ***
-  // *********************
 
-  // @computed get totalSharks() {
-  //   let totalSharks = 0;
-  //   this.user.sharkicorns.map((sharkicorn) => {
-  //     if (sharkicorn.showing) {
-  //       totalSharks++;
-  //     }
-  //   });
-  //   return totalSharks;
-  // }
-
-  // @computed get deletedSharks() {
-  //   const deletedSharks = [];
-  //   this.user.sharkicorns.map((sharkicorn) => {
-  //     if (!sharkicorn.showing) {
-  //       deletedSharks.push(sharkicorn);
-  //     }
-  //   });
-  //   return deletedSharks;
-  // }
+  @computed get totalSharks() {
+    let totalSharks = 0;
+    this.user.sharkicorns.map((sharkicorn) => {
+      if (sharkicorn.showing) {
+        totalSharks++;
+      }
+    });
+    return totalSharks;
+  }
 
 
-  // *********************
-  // ****** ACTIONS ******
-  // *********************
 
-  // @action async getUserFromDB() {
-  //   const response = await fetch('/api');
-  //   const json = await response.json();
 
-  //   if (json) {
-  //     this.user = json;
-  //   }
-  // }
 
-  // @action toggleEditing() {
-  //   if (this.editing) {
-  //     this.saveToDB();
-  //     this.editing = !this.editing;
-  //   } else {
-  //     this.editing = !this.editing;
-  //   }
-  // }
-
-  // @action async saveToDB() {
-  //   const reqBody = JSON.stringify(this.user);
-  //   await fetch('/api', { method: 'POST', body: reqBody, headers: {'content-type': 'application/json'} });
-  // }
 
   @action addJobCard() {
     this.jobCards.push(new JobCard());
@@ -86,13 +92,6 @@ export default class APP_STORE {
   }
 
   constructor() {
-    // SET UP THE APP_STORE
-    //this.getUserFromDB();
-
-    // SNIFF FOR TOUCH SCREENS
-    //IdentifyTouchDevices();
-
-    // SNIFF FOR DEV MODE
     const urlQuery = queryString.parse(location.search);
     if (urlQuery.mode === 'dev') {
       this.devMode = true;

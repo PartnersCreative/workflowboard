@@ -3,23 +3,8 @@ import { observer, inject } from 'mobx-react';
 
 import Card from './cards';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import Daycell from './daycell';
+import DayCell from './daycell';
 import JobCard from './jobcard';
-
-const getItems = count =>
-Array.from({ length: count }, (v, k) => k).map(k => ({
-  id: `item-${k}`,
-  content: `item ${k}`,
-}));
-
-// a little function to help us with reordering the result
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
 
 const grid = 8;
 
@@ -42,42 +27,36 @@ const getListStyle = isDraggingOver => ({
   width: 250,
 });
 
-
 @inject('store') @observer
 export default class App extends Component {
-  
-  componentDidMount() {
 
-  }
-
-  constructor(props) {
-    super(props);
-    
-    this.onDragEnd = this.onDragEnd.bind(this);
-  }
-
-  onDragEnd(result) {
+  onDragEnd = (result) => {
     const {store} = this.props;
-    
-    // dropped outside the list
+
     if (!result.destination) {
       return;
     }
 
-    const items = reorder(
-      store.jobCards,
-      result.source.index,
-      result.destination.index
-    );
+    // const currentDate = 
+
+    const jobCards = store.jobCards;
+    const startIndex = result.source.index;
+    const endIndex = result.destination.index;
+
+    //moving of the dragged card to new index 
+    const [removed] = jobCards.splice(startIndex, 1);
+    jobCards.splice(endIndex, 0, removed);
   }
 
   // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
   render() {
     return (
+      <div>
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <Daycell getItemStyle={getItemStyle} state={this.state} getListStyle={getListStyle}/>
+        <DayCell getItemStyle={getItemStyle} getListStyle={getListStyle} />
       </DragDropContext>
+      </div>
     );
   }
 }
