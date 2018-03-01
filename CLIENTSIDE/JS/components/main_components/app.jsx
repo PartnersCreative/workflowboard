@@ -52,21 +52,30 @@ export default class App extends Component {
       const endIndex = result.destination.index;
 
     } else {
-      
-        
       sourceCard.startDate = destinationDay;
-      
     }
   }
 
   // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
   render() {
+    
+    const { store } = this.props;
+
+    const jobRow = store.jobRows.map((row) => {
+      // console.log( "this is the row cat " + row.category );
+    
+     return <DragDropContext onDragEnd={this.onDragEnd}><DayCell getItemStyle={getItemStyle} getListStyle={getListStyle} category={row.category} /></DragDropContext>
+    });
+    
+
     return (
       <div>
-      <DragDropContext onDragEnd={this.onDragEnd} >
-        <DayCell getItemStyle={getItemStyle} getListStyle={getListStyle} />
-      </DragDropContext>
+        
+        <button className='ghostBtn' onClick={() => store.addJobRow(this.rowCategoryInput.value)}>Add Row</button>
+        <input type="text" ref={(input) => { this.rowCategoryInput = input; }} ></input>
+        
+          <div>{jobRow}</div>
       </div>
     );
   }

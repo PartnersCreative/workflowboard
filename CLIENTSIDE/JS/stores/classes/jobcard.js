@@ -12,7 +12,8 @@ export default class JobCard {
   @observable asignee = "asignee";
   @observable notes = "notes";
   @observable projectManager = "PM";
-  @observable associatedRow = null;
+  @observable category = null;
+
   
   //@action async getName() {
     // const response = await fetch('https://randomuser.me/api/');
@@ -22,7 +23,9 @@ export default class JobCard {
     // this.showing = true;
   //}
 
-  constructor(){
+  constructor(category){
     this.cardId = `card_${Math.random()}`;
+    this.category = category;
   }
 }
+

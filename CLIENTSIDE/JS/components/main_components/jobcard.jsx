@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { Draggable } from 'react-beautiful-dnd';
 import { observer, inject} from 'mobx-react';
 
-
-
 const Dragger = ({getItemStyle, ...props}) => 
 <observer>
 	<Draggable {...props} >

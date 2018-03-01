@@ -14,33 +14,48 @@ export default class DayCell extends Component {
 	};
 
 	render() {
-		const { store } = this.props;
+		const { store, row } = this.props;
+		//const { store, row } = this.props;
+		//const jobRow = row.rowId;
 
-		const cards = store.jobCards.map((card, index) => (
-    	<JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-    ));
+		const cards = store.jobCards.map((card, index) => {
+    	if(card.category === this.props.category) {
+    		return <JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
+			}
+		});
 
-    const mondayCards = store.mondayCards.map((card, index) => (
-    	<JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-    ));
-    const tuesdayCards = store.tuesdayCards.map((card, index) => (
-    	<JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-    ));
-    const wednesdayCards = store.wednesdayCards.map((card, index) => (
-    	<JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-    ));
-    const thursdayCards = store.thursdayCards.map((card, index) => (
-    	<JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-    ));
-    const fridayCards = store.fridayCards.map((card, index) => (
-    	<JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-    ));
+    const mondayCards = store.mondayCards.map((card, index) => {
+    	if(card.category === this.props.category) {
+    		return <JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
+    	}
+    });
+    const tuesdayCards = store.tuesdayCards.map((card, index) => {
+    	if(card.category === this.props.category) {
+    		return <JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
+    	}
+    });
+    const wednesdayCards = store.wednesdayCards.map((card, index) => {
+    	if(card.category === this.props.category) {
+    		return <JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
+    	}
+    });
+    const thursdayCards = store.thursdayCards.map((card, index) => {
+    	if(card.category === this.props.category) {
+    		return <JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
+    	}
+    });
+    const fridayCards = store.fridayCards.map((card, index) => {
+    	if(card.category === this.props.category) {
+    		return <JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
+    	}
+    });
 
 	  return (
 	  	<div id="flexer">
 		
-				<button className='ghostBtn' onClick={() => store.addJobCard()}>Add Card</button>
-		
+				<button className='ghostBtn' onClick={() => store.addJobCard(this.props.category)}>Add {this.props.category} Card</button>
+				<button className='remove' onClick={() => store.removeJobRow(jobRow.rowId)}>X</button>
+
 				<Droppable droppableId="Monday">
 		     	{(provided, snapshot) => (
 

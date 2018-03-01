@@ -1,5 +1,5 @@
 
-import { observable, computed, action } from 'mobx';
+import { observable, computed, action, reaction } from 'mobx';
 
 // DEV MODE TOOLS
 import queryString from 'query-string';
@@ -17,6 +17,29 @@ export default class APP_STORE {
   // *** OBSERVABLES ***
   // *******************
   @observable jobCards = [];
+
+  @observable jobRows = [];
+
+  @observable daysDisplayed = [ "monday", "tuesday", "wednesday", "thursday", "friday"];
+
+  // @observable get allCards(){
+
+  //   const allCards = []
+
+  //   this.jobCards.map((jobCard, index) => {
+  //     if (jobCard.startDate === daysOfTheWeek[index]) {
+  //       allCards.push(jobCard);
+  //     }
+  //   });
+  //   return allCards;
+  // }
+
+
+
+
+
+
+
 
 
   @computed get mondayCards(){
@@ -70,21 +93,36 @@ export default class APP_STORE {
 
 
 
-
-
-  @action addJobCard() {
-    this.jobCards.push(new JobCard());
+  @action addJobCard(category) {
+    this.jobCards.push(new JobCard(category));
   }
+
 
   @action removeJobCard(cardId) {
     const jobCardIndex = this.jobCards.findIndex(jobCard => jobCard.cardId === cardId);
     this.jobCards.splice(jobCardIndex, 1)
   }
+  
+  @action addJobRow(inputCategory) {
+    //console.log("trying to push new row");
+    if( !this.jobRows.find(jobRow => jobRow.category === inputCategory ) ) {
+      this.jobRows.push(new JobRow(inputCategory));
+    }
+
+  }
+
+  @action removeJobRow(rowId) {
+    console.log("trying to remove row");
+    const rowIndex = this.jobRows.findIndex(jobRow => jobRow.rowId === rowId);
+    this.jobRows.splice(rowIndex, 1)
+  }
 
   constructor() {
     const urlQuery = queryString.parse(location.search);
+
     if (urlQuery.mode === 'dev') {
       this.devMode = true;
     }
+    reaction( () => this.jobCards.map( card => card ), ( jobCards ) => console.log(jobCards));
   }
 }
