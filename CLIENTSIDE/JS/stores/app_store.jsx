@@ -13,14 +13,7 @@ import JobRow from './classes/row';
 
 export default class APP_STORE {
 
-  // *******************
-  // *** OBSERVABLES ***
-  // *******************
-  @observable jobCards = [];
-
   @observable jobRows = [];
-
-  @observable daysDisplayed = [ "monday", "tuesday", "wednesday", "thursday", "friday"];
 
   @action addJobRow(inputCategory) {
     //console.log("trying to push new row");
@@ -29,9 +22,8 @@ export default class APP_STORE {
     }
   }
 
-  @action removeJobRow(rowId) {
-    console.log("trying to remove row");
-    const rowIndex = this.jobRows.findIndex(jobRow => jobRow.rowId === rowId);
+  @action removeJobRow(inputCategory) {
+    const rowIndex = this.jobRows.findIndex(jobRow => jobRow.category === inputCategory);
     this.jobRows.splice(rowIndex, 1)
   }
 

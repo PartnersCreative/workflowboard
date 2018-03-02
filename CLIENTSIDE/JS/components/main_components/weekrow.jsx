@@ -2,43 +2,33 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 import React, { Component } from 'react';
 import JobCard from './jobcard';
 import { observer, inject } from 'mobx-react';
-
+import moment from 'moment';
+import $ from 'jquery';
+import ObservableDroppable from './observableDroppable';
 
 @inject('store') @observer
-export default class WeekRow extends Component {
-
-	constructor(props) {
-	  super(props);
-		console.log(props);
-	};
+export default class DayCell extends Component {
 
 	render() {
-		const { store } = this.props;
+		const { store, rowStore } = this.props;
 
-		const cards = store.jobCards.map((card, index) => (
-    	<JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-    ));
+		const getJobCards = day =>
+			rowStore.jobCards[day].map((card, index) => <JobCard rowStore={rowStore} key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} /> );
+
+		const weekDays = ["monday", "tuesday", "wednesday", "thursday", "friday"];
 
 	  return (
-	  	<WeekRow>
-				<Droppable droppableId="droppable">
+	  	<div id="flexer">
+				<button className='ghostBtn' onClick={() => rowStore.addJobCard(rowStore.category, "monday")}>Add {rowStore.category} Card</button>
+				<button className='ghostBtn' onClick={() => store.removeJobRow(rowStore.category)}>X</button>
 
-				  {(provided, snapshot) => (
-
-				    <div
-				      ref={provided.innerRef}
-				      style={this.props.getListStyle(snapshot.isDraggingOver)}
-				    >
-
-						<button className='ghostBtn' onClick={() => store.addJobCard()}>Add Card</button>
-
-						{cards}
-				      	
-				      {provided.placeholder}
-				    </div>
-				  )}
-				</Droppable>
-			</WeekRow>
+				{weekDays.map(day =>
+					<ObservableDroppable droppableId={day} key={day} getListStyle={this.props.getListStyle}>
+			      <h1>{day}</h1>
+			      {getJobCards(day)}
+					</ObservableDroppable>
+				)}
+			</div>
 		)
 	}
 }
