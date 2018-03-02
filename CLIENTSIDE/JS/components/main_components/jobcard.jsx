@@ -37,7 +37,7 @@ export default class Jobcard extends Component {
   }
 
 	render() {
-    const { store, card } = this.props;
+    const { store, card, rowStore } = this.props;
     const cardId = card.cardId
     //console.log(card.cardId)
 
@@ -54,7 +54,7 @@ export default class Jobcard extends Component {
           <input type='text' className='notes' name='notes' value={card.notes} onChange={e => this.updateField('notes', e)} />
 	      	<input type='text' className='startDate' name='startDate' value={card.startDate} onChange={e => this.updateField('startDate', e)} />
 	        
-	        <button className='remove' onClick={() => store.removeJobCard(card.cardId)}>X</button>
+	        <button className='remove' onClick={() => rowStore.removeJobCard(card.cardId)}>X</button>
 		      {cardId}
 		    </Dragger>
 

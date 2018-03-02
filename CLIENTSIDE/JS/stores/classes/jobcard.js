@@ -14,18 +14,8 @@ export default class JobCard {
   @observable projectManager = "PM";
   @observable category = null;
 
-  
-  //@action async getName() {
-    // const response = await fetch('https://randomuser.me/api/');
-    // const json = await response.json();
-    // const newName = json.results[0].name.first;
-    // this.name = newName;
-    // this.showing = true;
-  //}
-
   constructor(category){
     this.cardId = `card_${Math.random()}`;
     this.category = category;
   }
 }
-

@@ -5,56 +5,35 @@ import { observer, inject } from 'mobx-react';
 import moment from 'moment';
 import $ from 'jquery';
 
-@inject('store') @observer
+@observer
 export default class DayCell extends Component {
 
-	constructor(props) {
-	  super(props);
-		//console.log(props);
-	};
-
 	render() {
-		const { store, row } = this.props;
-		//const { store, row } = this.props;
-		//const jobRow = row.rowId;
+		const { rowStore } = this.props;
 
-		const cards = store.jobCards.map((card, index) => {
-    	if(card.category === this.props.category) {
-    		return <JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-			}
-		});
+		const jobCards = rowStore.jobCards;
+		console.log("this is the jobcards array " , rowStore)
 
-    const mondayCards = store.mondayCards.map((card, index) => {
-    	if(card.category === this.props.category) {
-    		return <JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-    	}
-    });
-    const tuesdayCards = store.tuesdayCards.map((card, index) => {
-    	if(card.category === this.props.category) {
-    		return <JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-    	}
-    });
-    const wednesdayCards = store.wednesdayCards.map((card, index) => {
-    	if(card.category === this.props.category) {
-    		return <JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-    	}
-    });
-    const thursdayCards = store.thursdayCards.map((card, index) => {
-    	if(card.category === this.props.category) {
-    		return <JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-    	}
-    });
-    const fridayCards = store.fridayCards.map((card, index) => {
-    	if(card.category === this.props.category) {
-    		return <JobCard key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
-    	}
-    });
+	// const getJobCards = day => 
+	// 	rowStore.jobCards.map((card, index) => {
+	// 		console.log("card start date",card.startDate);
+ //    	if(card.startDate === day) {
+ //    		return <JobCard rowStore={rowStore} key={card.id} card={card} index={index} getItemStyle={this.props.getItemStyle} />
+ //    	}
+ //    });	
 
+
+ 		const getJobCards = day => 
+			jobCards.map((card, index) => {
+				console.log("card start date",card.startDate);
+	    	
+	    });	
+	
 	  return (
 	  	<div id="flexer">
 		
-				<button className='ghostBtn' onClick={() => store.addJobCard(this.props.category)}>Add {this.props.category} Card</button>
-				<button className='remove' onClick={() => store.removeJobRow(jobRow.rowId)}>X</button>
+				<button className='ghostBtn' onClick={() => rowStore.addJobCard(rowStore.category)}>Add {rowStore.category} Card</button>
+				<button className='remove' onClick={() => rowStore.removeJobRow(jobRow.rowId)}>X</button>
 
 				<Droppable droppableId="Monday">
 		     	{(provided, snapshot) => (
@@ -67,7 +46,8 @@ export default class DayCell extends Component {
 		 		    	<div id="dow1"></div>
 		 		    	<h1>Monday</h1>
 
-		 		    	{mondayCards}
+		 		    	{getJobCards('monday')}
+		 		    	{jobCards.map(() => <h1> i am watching </h1>)}
 		 		      {provided.placeholder}
 		 		    </div>
 		 		  )}
@@ -82,7 +62,7 @@ export default class DayCell extends Component {
 		 		      id="dayCell"
 		 		    >
 		 		    	<h1>Tuesday</h1>
-		 		    	{tuesdayCards}
+		 		    	{getJobCards('tuesday')}
 		 		      {provided.placeholder}
 		 		    </div>
 		 		  )}
@@ -98,7 +78,7 @@ export default class DayCell extends Component {
 		 		    >
 		 		    <div id="dow3"></div>
 		 		    	<h1>Wednesday</h1>
-		 		    	{wednesdayCards}
+		 		    	{getJobCards('wednesday')}
 		 		      {provided.placeholder}
 		 		    </div>
 		 		  )}
@@ -113,7 +93,7 @@ export default class DayCell extends Component {
 		 		      id="dayCell"
 		 		    >
 		 		    	<h1>Thursday</h1>
-		 		    	{thursdayCards}
+		 		    	{getJobCards('thursday')}
 		 		      {provided.placeholder}
 		 		    </div>
 		 		  )}
@@ -128,7 +108,7 @@ export default class DayCell extends Component {
 		 		      id="dayCell"
 		 		    >
 		 		    	<h1>Friday</h1>
-		 		    	{fridayCards}
+		 		    	{getJobCards('friday')}
 		 		      {provided.placeholder}
 		 		    </div>
 		 		  )}

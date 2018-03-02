@@ -37,16 +37,22 @@ export default class App extends Component {
       return;
     }
 
-    const jobCards = store.jobCards;
+    const jobRows = store.jobRows;
 
     //moving cards from one daycell to another
     const sourceDay = result.source.droppableId.toLowerCase();
     const destinationDay = result.destination.droppableId.toLowerCase();
-    const sourceCard = jobCards.find( card => card.cardId === result.draggableId )
-
+    
+    let sourceCard;
+    jobRows.forEach(row => {
+      const jobCard = row.jobCards.find( card => card.cardId === result.draggableId );
+      if( jobCard ) { 
+        sourceCard = jobCard;
+      }
+    })
 
     //moving of the dragged card to new index 
-    if( sourceDay === destinationDay ) {
+    if( sourceCard && sourceDay === destinationDay ) {
       const dayStore = store[`${sourceDay}Cards`];
       const startIndex = result.source.index;
       const endIndex = result.destination.index;
@@ -63,9 +69,7 @@ export default class App extends Component {
     const { store } = this.props;
 
     const jobRow = store.jobRows.map((row) => {
-      // console.log( "this is the row cat " + row.category );
-    
-     return <DragDropContext onDragEnd={this.onDragEnd}><DayCell getItemStyle={getItemStyle} getListStyle={getListStyle} category={row.category} /></DragDropContext>
+      return <DragDropContext onDragEnd={this.onDragEnd}><DayCell getItemStyle={getItemStyle} getListStyle={getListStyle} rowStore={row} /></DragDropContext>
     });
     
 
@@ -75,7 +79,7 @@ export default class App extends Component {
         <button className='ghostBtn' onClick={() => store.addJobRow(this.rowCategoryInput.value)}>Add Row</button>
         <input type="text" ref={(input) => { this.rowCategoryInput = input; }} ></input>
         
-          <div>{jobRow}</div>
+        <div>{jobRow}</div>
       </div>
     );
   }
