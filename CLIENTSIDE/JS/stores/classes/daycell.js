@@ -1,6 +1,7 @@
 import React from 'react';
 import { observable, computed, action } from 'mobx';
 import request from 'axios';
+import JobCard from './jobcard';
 
 export default class DayCell {
 
@@ -10,11 +11,16 @@ export default class DayCell {
 
   @observable jobCards = [];
 
-  //@action async getName() {
-    // const response = await fetch('https://randomuser.me/api/');
-    // const json = await response.json();
-    // const newName = json.results[0].name.first;
-    // this.name = newName;
-    // this.showing = true;
-  //}
+  @action addJobCard(category) {
+    this.jobCards.push(new JobCard(category));
+  }
+
+  @action removeJobCard(cardId, day) {
+    const jobCardIndex = this.jobCards[day].findIndex(jobCard => jobCard.cardId === cardId);
+    this.jobCards[day].splice(jobCardIndex, 1)
+  }
+
+  constructor(moment) {
+    this.date = moment.format('D');
+  }
 }

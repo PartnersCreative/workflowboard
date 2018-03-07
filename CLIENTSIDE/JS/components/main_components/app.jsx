@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import $ from 'jquery';
-import arrayMove from 'array-move';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import WeekRow from './weekrow';
 import JobCard from './jobcard';
-
+import moment from 'moment';
 
 const grid = 8;
 
@@ -32,6 +31,7 @@ const getListStyle = isDraggingOver => ({
 export default class App extends Component {
 
   onDragEnd = (result) => {
+    console.log('result', result)
     const {store} = this.props;
 
     if (!result.destination) {
@@ -49,9 +49,11 @@ export default class App extends Component {
     let sourceRow;
     let sourceCard;
 
+    console.log('jobRows:', jobRows);
+
     jobRows.forEach(row => {
-      Object.keys(row.jobCards).forEach(key => {
-        const jobCard = row.jobCards[key].find( card => card.cardId === result.draggableId );
+      row.forEach(daycell => {
+        daycell.find( card => card.cardId === result.draggableId );
         if( jobCard ) {
           sourceRow = row;
           sourceCard = jobCard;
@@ -76,6 +78,8 @@ export default class App extends Component {
 
     const { store } = this.props;
 
+    //console.log(moment().format('d'));
+
     const jobRow = store.jobRows.map((row) => {
       return <DragDropContext onDragEnd={this.onDragEnd} key={row.category}><WeekRow getItemStyle={getItemStyle} getListStyle={getListStyle} rowStore={row} /></DragDropContext>
     });
@@ -85,6 +89,7 @@ export default class App extends Component {
 
         <button className='ghostBtn' onClick={() => store.addJobRow(this.rowCategoryInput.value)}>Add Row</button>
         <input type="text" ref={(input) => { this.rowCategoryInput = input; }} ></input>
+        {/*<button className='ghostBtn' onClick={() => store.addWeek(this.rowCategoryInput.value)}>Add Week</button>*/}
 
         <div>{jobRow}</div>
       </div>

@@ -1,8 +1,16 @@
 #flexer {
 	display: flex;
-
 }
 
-#dayCell {
+.dayCell {
 	border: 2px solid red;
+	width: 100px;
+
+	>div {
+		height: 100%;
+	}
+}
+
+.remove {
+	width: 200px;
 }

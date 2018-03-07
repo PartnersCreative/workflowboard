@@ -4,7 +4,6 @@ import request from 'axios';
 
 export default class JobCard {
 
-
   @observable cardId = null;
   @observable startDate = "monday";
   @observable endDate = "end/date";
